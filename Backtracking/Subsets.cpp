@@ -1,3 +1,5 @@
+// https://www.interviewbit.com/problems/subset/
+
 void backtrack(vector<int> &A, int st, vector<vector<int>> &v, vector<int> &v1)
 {
     v.push_back(v1);
