@@ -1,37 +1,35 @@
-vector<int> Solution::maxset(vector<int> &Vec) {
-        int N = Vec.size();
-
-        long long mx_sum = 0;
-        long long cur_sum = 0;
-        int mx_range_left = -1;
-        int mx_range_right = -1;
-        int cur_range_left = 0;
-        int cur_range_right = 0;
-
-        while(cur_range_right < N) {
-            if(Vec[cur_range_right] < 0) {
-                cur_range_left = cur_range_right + 1;
-                cur_sum = 0;
-            } else {
-                cur_sum += (long long)Vec[cur_range_right];
-                if(cur_sum > mx_sum) {
-                    mx_sum = cur_sum;
-                    mx_range_left = cur_range_left;
-                    mx_range_right = cur_range_right;
-                } else if(cur_sum == mx_sum) {
-                    if(cur_range_right - cur_range_left > mx_range_right - mx_range_left) {
-                        mx_range_left = cur_range_left;
-                        mx_range_right = cur_range_right;
-                    }
-                }
-            }
-            cur_range_right++;
+vector<int> Solution::maxset(vector<int> &A) {
+    int n=A.size();
+    int i=0,maxm=0,count=0,start=0,end=-1;
+    int fstart=-1,fend=-1;
+    long long int sum=0,maxsum=0;
+    vector<int> res;
+    while(i<n){
+        if(A[i]>=0){
+            sum+=A[i];
+            count++;
+            end++;
         }
-        vector<int> ans;
-        if(mx_range_left == -1 || mx_range_right == -1)
-                return ans;
-
-        for(int i = mx_range_left; i < mx_range_right; ++i)
-                ans.push_back(Vec[i]);
-        return ans;
+        if(sum>maxsum){
+            maxsum=sum;
+            fstart=start;
+            fend=end;
+        }
+        else if(sum==maxsum&&count>maxm){
+            maxm=count;
+            fstart=start;
+            fend=end;
+        }
+        if(A[i]<0){
+            count=0;
+            start=i+1;end=i;
+            sum=0;
+        }
+        i++;
     }
+    if(fstart!=-1&&fend!=-1){
+        for(int i=fstart;i<=fend;i++)
+         res.push_back(A[i]);
+    }
+    return res;
+}
